@@ -1,0 +1,191 @@
+@import url(../fonts.css);
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+header {
+  background-color: #e4e3eb;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 100px;
+}
+
+header button {
+  width: 93px;
+  height: 40px;
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: 0;
+  background-color: #5d37f3;
+  font-family: "firaGo";
+  font-weight: 700;
+  line-height: 20px;
+  font-size: 14px;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+section {
+  margin: 80px 120px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+section h1 {
+  color: #1a1a1f;
+  font-family: "firaGo";
+  font-size: 64px;
+  font-weight: 700;
+  line-height: 72px;
+}
+
+.categories {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.categories h4 {
+  display: flex;
+  border-radius: 30px;
+  padding: 8px;
+  height: 32px;
+  font-family: "firaGo";
+  font-weight: 500;
+  line-height: 16px;
+  font-size: 12px;
+  align-items: center;
+}
+
+.modal-background {
+  width: 100vw;
+  height: 100vh;
+  background-color: black;
+  opacity: 0.5;
+  position: absolute;
+}
+
+.login-modal {
+  width: 480px;
+  height: 300px;
+  background-color: #ffffff;
+  position: absolute;
+  top: 280px;
+  left: 550px;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  padding: 24px 24px;
+}
+
+.login-modal .close-button {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.btn-stealth {
+  width: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.modal-header {
+  margin-bottom: 24px;
+}
+
+.login-modal h3 {
+  color: #1a1a1f;
+  text-align: center;
+  font-family: "firaGo";
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 32px;
+}
+
+.inputs {
+  display: flex;
+  flex-direction: column;
+}
+
+.inputs label {
+  color: #1a1a1f;
+  font-family: "firaGo";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 20px;
+  margin-bottom: 8px;
+}
+
+.inputs input {
+  width: 432px;
+  height: 42px;
+  border-radius: 12px;
+  border: 1.5px solid #5d37f3;
+  background: #f7f7ff;
+  padding: 12px 16px;
+  margin-bottom: 24px;
+}
+
+.button {
+  width: 100%;
+  border-radius: 8px;
+  background-color: #5d37f3;
+  border: 0;
+  height: 42px;
+  color: #fff;
+  font-family: "firaGo";
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  cursor: pointer;
+}
+
+.validation-message {
+  display: flex;
+  padding-bottom: 16px;
+}
+
+.validation-message .error-message {
+  margin-left: 8px;
+  color: #ea1919;
+  font-family: "firaGo";
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+}
+
+.validated {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 40px;
+}
+
+.validated img {
+  width: 64px;
+  margin-bottom: 16px;
+}
+
+.validated p {
+  color: #1a1a1f;
+  text-align: center;
+  font-family: "firaGo";
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 28px;
+  margin-bottom: 32px;
+}
