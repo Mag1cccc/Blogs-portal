@@ -26,6 +26,7 @@ export const LoginModal = ({ onClose }) => {
     try {
       const response = await axios.post(
         "https://api.blog.redberryinternship.ge/api/login",
+
         { email: email }
       );
 
@@ -51,7 +52,10 @@ export const LoginModal = ({ onClose }) => {
           <div className="validated">
             <img src={successImage} alt="success icon" />
             <p>წარმატებული ავტორიზაცია</p>
-            <button className="button"> კარგი </button>
+            <button className="button" onClick={onClose}>
+              {" "}
+              კარგი{" "}
+            </button>
           </div>
         ) : (
           <>
