@@ -2,6 +2,8 @@ import { useState } from "react";
 import backArrow from "../assets/back-arrow.png";
 import addFolder from "../assets/folder-add.png";
 import redberryLogo from "../assets/redberry-logo.png";
+import errorImage from "../assets/error-message.svg";
+import successImage from "../assets/success-button.png";
 
 export const CreateBlog = () => {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -9,18 +11,12 @@ export const CreateBlog = () => {
   const [titleValidation, setTitleValidation] = useState("default");
   const [descriptionValidation, setDescriptionValidation] = useState("default");
   const [dateValidation, setDateValidation] = useState();
+  const [emailValidation, setEmailValidation] = useState();
   const [authorValidation, setAuthorValidation] = useState({
     minLength: "default",
     minWords: "default",
     onlyGeorgian: "default",
   });
-
-  const getBorderColorClass = (...validationStates) => {
-    if (validationStates.includes("red")) return "invalid-border";
-    if (validationStates.includes("green") && !validationStates.includes("red"))
-      return "valid-border";
-    return "default-border";
-  };
 
   const validateFile = (file) => {
     if (file) {
@@ -41,41 +37,6 @@ export const CreateBlog = () => {
     }
   };
 
-  const handleDateChange = (event) => {
-    const dateValue = event.target.value;
-    validateDate(dateValue);
-  };
-
-  const validateDate = (value) => {
-    const isValid = value.length >= 8;
-    setDateValidation(isValid ? "green" : "red");
-  };
-
-  const handleDescriptionChange = (event) => {
-    const descriptionValue = event.target.value;
-    const isValid = descriptionValue.length >= 2;
-
-    setDescriptionValidation(isValid ? "green" : "red");
-  };
-
-  const handleTitleChange = (event) => {
-    const titleValue = event.target.value;
-    const isValid = titleValue.length >= 2;
-
-    setTitleValidation(isValid ? "green" : "red");
-  };
-
-  const handleFileChange = (event) => {
-    const file = event.target.files[0];
-    setSelectedFile(file);
-    validateFile(file);
-  };
-
-  const handleAuthorChange = (event) => {
-    const authorValue = event.target.value;
-    validateAuthor(authorValue);
-  };
-
   const validateAuthor = (value) => {
     const trimmedValue = value.trim();
     const georgianLetters = /^[\u10D0-\u10FA\s]+$/;
@@ -90,6 +51,88 @@ export const CreateBlog = () => {
       minWords: minWordsValid ? "green" : "red",
       onlyGeorgian: onlyGeorgianValid ? "green" : "red",
     });
+  };
+
+  const validateDate = (value) => {
+    const isValid = value.length >= 8;
+    setDateValidation(isValid ? "green" : "red");
+  };
+
+  const validateEmail = (value) => {
+    if (value.trim().length === 0 || emailValidation === "green") {
+      setEmailValidation("green");
+      return;
+    }
+
+    const isValid = value === "@redberry.ge" || !value.endsWith("@redberry.ge");
+    setEmailValidation(isValid ? "red" : "green");
+  };
+
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    setSelectedFile(file);
+    validateFile(file);
+  };
+
+  const handleAuthorChange = (event) => {
+    const authorValue = event.target.value;
+    validateAuthor(authorValue);
+  };
+
+  const handleTitleChange = (event) => {
+    const titleValue = event.target.value;
+    const isValid = titleValue.length >= 2;
+
+    setTitleValidation(isValid ? "green" : "red");
+  };
+
+  const handleDescriptionChange = (event) => {
+    const descriptionValue = event.target.value;
+    const isValid = descriptionValue.length >= 2;
+
+    setDescriptionValidation(isValid ? "green" : "red");
+  };
+
+  const handleDateChange = (event) => {
+    const dateValue = event.target.value;
+    validateDate(dateValue);
+  };
+
+  const handleEmailChange = (event) => {
+    const emailValue = event.target.value;
+
+    if (emailValue.trim().length === 0) {
+      setEmailValidation("");
+      return;
+    }
+
+    validateEmail(emailValue);
+  };
+
+  const handleSubmit = () => {
+    if (isAllValid()) {
+      console.log("Form submitted!");
+    } else {
+      console.log("Form validation failed!");
+    }
+  };
+
+  const isAllValid = () => {
+    return (
+      fileValidation === "green" &&
+      titleValidation === "green" &&
+      descriptionValidation === "green" &&
+      dateValidation === "green" &&
+      (!emailValidation || emailValidation === "green") &&
+      Object.values(authorValidation).every((val) => val === "green")
+    );
+  };
+
+  const getBorderColorClass = (...validationStates) => {
+    if (validationStates.includes("red")) return "invalid-border";
+    if (validationStates.includes("green") && !validationStates.includes("red"))
+      return "valid-border";
+    return "default-border";
   };
 
   return (
@@ -199,7 +242,7 @@ export const CreateBlog = () => {
                     ? "1px solid #14d81c"
                     : descriptionValidation === "red"
                     ? "1px solid #ea1919"
-                    : "1px solid #e4e3eb", // Default border color
+                    : "1px solid #e4e3eb",
               }}
               onChange={handleDescriptionChange}
             ></textarea>
@@ -237,11 +280,41 @@ export const CreateBlog = () => {
             <label className="labels"> ელ-ფოსტა </label>
             <input
               type="email"
-              className="inputs"
+              className={`inputs ${
+                emailValidation === "green"
+                  ? "valid-border"
+                  : emailValidation === "red"
+                  ? "invalid-border"
+                  : "default-border"
+              }`}
               placeholder="Example@redberry.ge"
+              onChange={handleEmailChange}
             />
+            {emailValidation === "red" && (
+              <div className="email-validation-message red">
+                <img src={errorImage} alt="invalid email" />
+                <p>მეილი უნდა მთავრდებოდეს @redberry.ge-ით</p>
+              </div>
+            )}
+            {emailValidation === "green" && (
+              <div className="email-validation-message green">
+                <img
+                  src={successImage}
+                  alt="valid email"
+                  style={{ width: 20 }}
+                />
+                <p>დამატებულია</p>
+              </div>
+            )}
           </div>
-          <button type="submit" className="submit-btn">
+          <button
+            type="submit"
+            className={`submit-btn ${
+              isAllValid() ? "validated-submit-btn" : ""
+            }`}
+            onClick={handleSubmit}
+            disabled={!isAllValid()}
+          >
             გამოქვეყნება
           </button>
         </div>

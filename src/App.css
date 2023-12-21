@@ -218,6 +218,11 @@ section h1 {
   flex-direction: column;
 }
 
+.blog-header {
+  display: flex;
+  justify-content: center;
+}
+
 .blog-container {
   margin: auto;
   margin-bottom: 200px;
@@ -390,4 +395,40 @@ input[type="date"] {
   font-weight: 400;
   line-height: 20px;
   color: #85858d;
+}
+
+.email-validation-message {
+  display: flex;
+  align-items: center;
+  margin-top: 4px;
+}
+
+.email-validation-message p {
+  margin-left: 6px;
+  font-family: "firaGo";
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 20px;
+}
+
+.email-validation-message.red {
+  color: #ea1919;
+}
+
+.email-validation-message.green p {
+  color: #14d81c;
+}
+
+.validated-submit-btn {
+  width: 288px;
+  height: 40px;
+  padding: 10px, 20px, 10px, 20px;
+  border-radius: 8px;
+  background-color: #5d37f3;
+  font-family: "firaGo";
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  color: #ffffff;
+  cursor: pointer;
 }
