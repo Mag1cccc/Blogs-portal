@@ -6,11 +6,21 @@ import redberryLogo from "../assets/redberry-logo.png";
 export const CreateBlog = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [fileValidation, setFileValidation] = useState("default");
+  const [titleValidation, setTitleValidation] = useState("default");
+  const [descriptionValidation, setDescriptionValidation] = useState("default");
+  const [dateValidation, setDateValidation] = useState();
   const [authorValidation, setAuthorValidation] = useState({
     minLength: "default",
     minWords: "default",
     onlyGeorgian: "default",
   });
+
+  const getBorderColorClass = (...validationStates) => {
+    if (validationStates.includes("red")) return "invalid-border";
+    if (validationStates.includes("green") && !validationStates.includes("red"))
+      return "valid-border";
+    return "default-border";
+  };
 
   const validateFile = (file) => {
     if (file) {
@@ -29,6 +39,30 @@ export const CreateBlog = () => {
     } else {
       setFileValidation("red");
     }
+  };
+
+  const handleDateChange = (event) => {
+    const dateValue = event.target.value;
+    validateDate(dateValue);
+  };
+
+  const validateDate = (value) => {
+    const isValid = value.length >= 8;
+    setDateValidation(isValid ? "green" : "red");
+  };
+
+  const handleDescriptionChange = (event) => {
+    const descriptionValue = event.target.value;
+    const isValid = descriptionValue.length >= 2;
+
+    setDescriptionValidation(isValid ? "green" : "red");
+  };
+
+  const handleTitleChange = (event) => {
+    const titleValue = event.target.value;
+    const isValid = titleValue.length >= 2;
+
+    setTitleValidation(isValid ? "green" : "red");
   };
 
   const handleFileChange = (event) => {
@@ -120,7 +154,11 @@ export const CreateBlog = () => {
               <label className="labels">ავტორი *</label>
               <input
                 type="text"
-                className="inputs"
+                className={`inputs ${getBorderColorClass(
+                  authorValidation.minLength,
+                  authorValidation.minWords,
+                  authorValidation.onlyGeorgian
+                )}`}
                 placeholder="შეიყვნეთ ავტორი"
                 onChange={handleAuthorChange}
               />
@@ -140,10 +178,11 @@ export const CreateBlog = () => {
               <label>სათაური *</label>
               <input
                 type="text"
-                className="inputs"
+                className={`inputs ${getBorderColorClass(titleValidation)}`}
                 placeholder="შეიყვნეთ სათაური"
+                onChange={handleTitleChange}
               />
-              <p>მინიმუმ 2 სიმბოლო</p>
+              <p style={{ color: titleValidation }}>მინიმუმ 2 სიმბოლო</p>
             </div>
           </div>
           <div className="container3">
@@ -154,13 +193,40 @@ export const CreateBlog = () => {
               cols="30"
               rows="10"
               placeholder="შეიყვნეთ აღწერა"
+              style={{
+                border:
+                  descriptionValidation === "green"
+                    ? "1px solid #14d81c"
+                    : descriptionValidation === "red"
+                    ? "1px solid #ea1919"
+                    : "1px solid #e4e3eb", // Default border color
+              }}
+              onChange={handleDescriptionChange}
             ></textarea>
-            <p>მინიმუმ 2 სიმბოლო</p>
+            <p style={{ color: descriptionValidation }} className="title-text">
+              მინიმუმ 2 სიმბოლო
+            </p>
           </div>
           <div className="container2">
             <div className="author">
               <label className="labels">გამოქვეყნების თარიღი *</label>
-              <input type="date" className="inputs  " />
+              <input
+                type="date"
+                className={`inputs ${
+                  dateValidation === "green"
+                    ? "valid-border"
+                    : dateValidation === "red"
+                    ? "invalid-border"
+                    : "default-border"
+                }`}
+                onChange={handleDateChange}
+              />
+              {dateValidation === "red" && (
+                <p style={{ color: "#ea1919" }}>სავალდებულოა</p>
+              )}
+              {dateValidation === "green" && (
+                <p style={{ color: "#14d81c" }}>დამატებულია</p>
+              )}
             </div>
             <div className="author ml-24">
               <label className="labels">კატეგორია *</label>
