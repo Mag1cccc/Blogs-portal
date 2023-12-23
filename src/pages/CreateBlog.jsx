@@ -4,6 +4,7 @@ import addFolder from "../assets/folder-add.png";
 import redberryLogo from "../assets/redberry-logo.png";
 import errorImage from "../assets/error-message.svg";
 import successImage from "../assets/success-button.png";
+import { CategoriesDropdown } from "../../components/CategoriesDropdown";
 
 export const CreateBlog = () => {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -12,6 +13,14 @@ export const CreateBlog = () => {
   const [descriptionValidation, setDescriptionValidation] = useState("default");
   const [dateValidation, setDateValidation] = useState();
   const [emailValidation, setEmailValidation] = useState();
+  const [categoriesValidation, setCategoriesValidation] = useState("default");
+
+  const validateCategory = (selectedCategories) => {
+    console.log("Selected Categories:", selectedCategories);
+    const isValid = selectedCategories.length === 1;
+    setCategoriesValidation(isValid ? "green" : "red");
+  };
+
   const [authorValidation, setAuthorValidation] = useState({
     minLength: "default",
     minWords: "default",
@@ -56,6 +65,12 @@ export const CreateBlog = () => {
   const validateDate = (value) => {
     const isValid = value.length >= 8;
     setDateValidation(isValid ? "green" : "red");
+  };
+
+  const validateCategories = (selectedCategories) => {
+    console.log("Selected Categories:", selectedCategories);
+    const isValid = selectedCategories.length > 0; // Check if any categories are selected
+    setCategoriesValidation(isValid ? "green" : "red");
   };
 
   const validateEmail = (value) => {
@@ -109,23 +124,27 @@ export const CreateBlog = () => {
     validateEmail(emailValue);
   };
 
-  const handleSubmit = () => {
-    if (isAllValid()) {
-      console.log("Form submitted!");
-    } else {
-      console.log("Form validation failed!");
-    }
-  };
-
   const isAllValid = () => {
     return (
       fileValidation === "green" &&
       titleValidation === "green" &&
       descriptionValidation === "green" &&
       dateValidation === "green" &&
+      categoriesValidation === "green" &&
       (!emailValidation || emailValidation === "green") &&
       Object.values(authorValidation).every((val) => val === "green")
     );
+  };
+
+  const handleSubmit = () => {
+    if (isAllValid()) {
+      console.log("All validations passed! Proceed with the action.");
+      // Perform your action here when all validations pass, including categories
+      // For example: Submit form data, trigger an API call, etc.
+      console.log("Form submitted!");
+    } else {
+      console.log("Form validation failed!");
+    }
   };
 
   const getBorderColorClass = (...validationStates) => {
@@ -273,7 +292,7 @@ export const CreateBlog = () => {
             </div>
             <div className="author ml-24">
               <label className="labels">კატეგორია *</label>
-              <select className="inputs"></select>
+              <CategoriesDropdown validateCategories={validateCategories} />
             </div>
           </div>
           <div className="container3">
