@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import backArrow from "../assets/back-arrow.png";
 import addFolder from "../assets/folder-add.png";
 import redberryLogo from "../assets/redberry-logo.png";
@@ -20,6 +20,55 @@ export const CreateBlog = () => {
     minWords: "default",
     onlyGeorgian: "default",
   });
+
+  const [selectedPhoto, setSelectedPhoto] = useState(null);
+  const [author, setAuthor] = useState("");
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [date, setDate] = useState("");
+  const [category, setCategory] = useState("");
+  const [email, setEmail] = useState("");
+  const [selectedCategories, setSelectedCategories] = useState([]);
+
+  useEffect(() => {
+    const loadFormDataFromLocalStorage = () => {
+      try {
+        const savedFormData = localStorage.getItem("formData");
+        if (savedFormData) {
+          const savedFileURL = localStorage.getItem("selectedPhoto");
+
+          if (savedFileURL) {
+            setSelectedPhoto(savedFileURL);
+          }
+          const parsedFormData = JSON.parse(savedFormData);
+
+          setAuthor(parsedFormData.author);
+          setTitle(parsedFormData.title);
+          setDescription(parsedFormData.description);
+          setDate(parsedFormData.date);
+          setCategory(parsedFormData.category);
+          setEmail(parsedFormData.email);
+        }
+      } catch (error) {
+        console.error("Error loading from localStorage:", error);
+      }
+    };
+
+    loadFormDataFromLocalStorage();
+  }, []);
+
+  const getFormData = () => {
+    return {
+      selectedPhoto,
+      author,
+      title,
+      description,
+      date,
+      category,
+      email,
+      // ... other form fields
+    };
+  };
 
   const validateFile = (file) => {
     if (file) {
@@ -79,43 +128,75 @@ export const CreateBlog = () => {
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
+    setSelectedPhoto(file);
+    const fileURL = URL.createObjectURL(file); // Create a URL for the selected file
     setSelectedFile(file);
     validateFile(file);
+
+    localStorage.setItem(
+      "formData",
+      JSON.stringify({ ...getFormData(), selectedPhoto: file })
+    );
   };
 
   const handleAuthorChange = (event) => {
-    const authorValue = event.target.value;
-    validateAuthor(authorValue);
+    const newAuthor = event.target.value;
+    setAuthor(newAuthor);
+    localStorage.setItem(
+      "formData",
+      JSON.stringify({ ...getFormData(), author: newAuthor })
+    );
+    validateAuthor(newAuthor);
   };
 
   const handleTitleChange = (event) => {
-    const titleValue = event.target.value;
-    const isValid = titleValue.length >= 2;
+    const newTitle = event.target.value;
+    setTitle(newTitle);
+    localStorage.setItem(
+      "formData",
+      JSON.stringify({ ...getFormData(), title: newTitle })
+    );
+    const isValid = newTitle.length >= 2;
 
     setTitleValidation(isValid ? "green" : "red");
   };
 
   const handleDescriptionChange = (event) => {
-    const descriptionValue = event.target.value;
-    const isValid = descriptionValue.length >= 2;
+    const newDescription = event.target.value;
+    setDescription(newDescription);
+    localStorage.setItem(
+      "formData",
+      JSON.stringify({ ...getFormData(), description: newDescription })
+    );
+    const isValid = newDescription.length >= 2;
 
     setDescriptionValidation(isValid ? "green" : "red");
   };
 
   const handleDateChange = (event) => {
-    const dateValue = event.target.value;
-    validateDate(dateValue);
+    const newDate = event.target.value;
+    setDate(newDate);
+    localStorage.setItem(
+      "formData",
+      JSON.stringify({ ...getFormData(), date: newDate })
+    );
+    validateDate(newDate);
   };
 
   const handleEmailChange = (event) => {
-    const emailValue = event.target.value;
+    const newEmail = event.target.value;
+    setEmail(newEmail);
+    localStorage.setItem(
+      "formData",
+      JSON.stringify({ ...getFormData(), email: newEmail })
+    );
 
-    if (emailValue.trim().length === 0) {
+    if (newEmail.trim().length === 0) {
       setEmailValidation("");
       return;
     }
 
-    validateEmail(emailValue);
+    validateEmail(newEmail);
   };
 
   const isAllValid = () => {
@@ -167,7 +248,7 @@ export const CreateBlog = () => {
                 <label> ჩააგდეთ ფაილი აქ ან </label>
                 <input
                   type="file"
-                  name="აირჩიეთ ფაილი"
+                  name="file"
                   className="file-input"
                   accept="image/*"
                   onChange={handleFileChange}
@@ -216,6 +297,7 @@ export const CreateBlog = () => {
                 )}`}
                 placeholder="შეიყვნეთ ავტორი"
                 onChange={handleAuthorChange}
+                value={author}
               />
               <ul>
                 <li style={{ color: authorValidation.minLength }}>
@@ -236,6 +318,7 @@ export const CreateBlog = () => {
                 className={`inputs ${getBorderColorClass(titleValidation)}`}
                 placeholder="შეიყვნეთ სათაური"
                 onChange={handleTitleChange}
+                value={title}
               />
               <p style={{ color: titleValidation }}>მინიმუმ 2 სიმბოლო</p>
             </div>
@@ -257,6 +340,7 @@ export const CreateBlog = () => {
                     : "1px solid #e4e3eb",
               }}
               onChange={handleDescriptionChange}
+              value={description}
             ></textarea>
             <p style={{ color: descriptionValidation }} className="title-text">
               მინიმუმ 2 სიმბოლო
@@ -275,6 +359,7 @@ export const CreateBlog = () => {
                     : "default-border"
                 }`}
                 onChange={handleDateChange}
+                value={date}
               />
               {dateValidation === "red" && (
                 <p style={{ color: "#ea1919" }}>სავალდებულოა</p>
@@ -301,6 +386,7 @@ export const CreateBlog = () => {
               }`}
               placeholder="Example@redberry.ge"
               onChange={handleEmailChange}
+              value={email}
             />
             {emailValidation === "red" && (
               <div className="email-validation-message red">

@@ -11,6 +11,20 @@ export const CategoriesDropdown = ({ validateCategories }) => {
 
   useEffect(() => {
     fetchCategories();
+    const storedSelectedCategories = JSON.parse(
+      localStorage.getItem("selectedCategories") || "[]"
+    );
+    const storedSelectedCategoryColors = JSON.parse(
+      localStorage.getItem("selectedCategoryColors") || "{}"
+    );
+
+    if (storedSelectedCategories.length > 0) {
+      setSelectedCategories(storedSelectedCategories);
+    }
+
+    if (Object.keys(storedSelectedCategoryColors).length > 0) {
+      setSelectedCategoryColors(storedSelectedCategoryColors);
+    }
   }, []);
 
   const fetchCategories = () => {
@@ -39,6 +53,17 @@ export const CategoriesDropdown = ({ validateCategories }) => {
       return borderColor;
     }
   };
+
+  useEffect(() => {
+    localStorage.setItem(
+      "selectedCategories",
+      JSON.stringify(selectedCategories)
+    );
+    localStorage.setItem(
+      "selectedCategoryColors",
+      JSON.stringify(selectedCategoryColors)
+    );
+  }, [selectedCategories, selectedCategoryColors]);
 
   const handleCategoryChange = (categoryId) => {
     const isSelected = selectedCategories.includes(categoryId);
