@@ -15,12 +15,6 @@ export const CreateBlog = () => {
   const [emailValidation, setEmailValidation] = useState();
   const [categoriesValidation, setCategoriesValidation] = useState("default");
 
-  const validateCategory = (selectedCategories) => {
-    console.log("Selected Categories:", selectedCategories);
-    const isValid = selectedCategories.length === 1;
-    setCategoriesValidation(isValid ? "green" : "red");
-  };
-
   const [authorValidation, setAuthorValidation] = useState({
     minLength: "default",
     minWords: "default",
@@ -69,7 +63,7 @@ export const CreateBlog = () => {
 
   const validateCategories = (selectedCategories) => {
     console.log("Selected Categories:", selectedCategories);
-    const isValid = selectedCategories.length > 0; // Check if any categories are selected
+    const isValid = selectedCategories.length > 0;
     setCategoriesValidation(isValid ? "green" : "red");
   };
 
@@ -139,8 +133,7 @@ export const CreateBlog = () => {
   const handleSubmit = () => {
     if (isAllValid()) {
       console.log("All validations passed! Proceed with the action.");
-      // Perform your action here when all validations pass, including categories
-      // For example: Submit form data, trigger an API call, etc.
+
       console.log("Form submitted!");
     } else {
       console.log("Form validation failed!");

@@ -2,11 +2,11 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import redberryLogo from "../assets/redberry-logo.png";
 import blogPagePhoto from "../assets/blog-page-photo.png";
-import { LoginModal } from "../../components/LoginModal";
+import { Link } from "react-router-dom";
 
-export const HomePage = ({  }) => {
+export const CreateBlogHomePage = ({}) => {
   const [dataCategories, setDataCategories] = useState([]);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  
 
   useEffect(() => {
     const fetchData = () => {
@@ -25,12 +25,13 @@ export const HomePage = ({  }) => {
 
   return (
     <div>
-      {isModalOpen && <LoginModal onClose={() => setIsModalOpen(false)} />}
       <header>
         <img src={redberryLogo} alt="redberry logo" />
-        <button type="submit" onClick={() => setIsModalOpen(true)}>
-          შესვლა
-        </button>
+        <Link to="/create-blog">
+          <button type="submit" className="add-blog-btn">
+            დაამატე ბლოგი
+          </button>
+        </Link>
       </header>
 
       <section>

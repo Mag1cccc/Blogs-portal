@@ -3,8 +3,9 @@ import svgImage from "../src/assets/add.svg";
 import errorImage from "../src/assets/error-message.svg";
 import successImage from "../src/assets/success-button.png";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
-export const LoginModal = ({ onClose }) => {
+export const LoginModal = ({ onClose, onLoginSuccess }) => {
   const [email, setEmail] = useState("");
   const [isValid, setIsValid] = useState(true);
   const [isValidated, setIsValidated] = useState(true);
@@ -32,6 +33,7 @@ export const LoginModal = ({ onClose }) => {
 
       if (response.status === 204) {
         setUsernameValidated(true);
+        onLoginSuccess();
       }
     } catch (error) {
       setIsValidated(false);
@@ -52,10 +54,12 @@ export const LoginModal = ({ onClose }) => {
           <div className="validated">
             <img src={successImage} alt="success icon" />
             <p>წარმატებული ავტორიზაცია</p>
-            <button className="button" onClick={onClose}>
-              {" "}
-              კარგი{" "}
-            </button>
+
+            <Link to="/create-blog-home-page" className="button">
+              <button className="button" onClick={onClose}>
+                კარგი
+              </button>
+            </Link>
           </div>
         ) : (
           <>

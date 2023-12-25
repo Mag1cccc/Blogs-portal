@@ -606,3 +606,17 @@ input[type="date"] {
 .categories-dropdown.green {
   border: 1px solid #14d81c;
 }
+
+.add-blog-btn {
+  width: 200px;
+  border-radius: 8px;
+  background-color: #5d37f3;
+  border: 0;
+  height: 42px;
+  color: #fff;
+  font-family: "firaGo";
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  cursor: pointer;
+}

@@ -36,7 +36,7 @@ export const CategoriesDropdown = ({ validateCategories }) => {
     } else if (showCategories && selectedCategories.length === 0) {
       setBorderColor("red");
     } else if (!showCategories) {
-      return borderColor; // Return the stored border color state when dropdown is closed
+      return borderColor;
     }
   };
 
@@ -75,13 +75,6 @@ export const CategoriesDropdown = ({ validateCategories }) => {
     validateCategories(updatedSelectedCategories);
   };
 
-  const handleCategorySelection = (selectedCategories) => {
-    // Your logic to handle category selection
-
-    // Call the validateCategories function passed from CreateBlog component
-    validateCategories(selectedCategories);
-  };
-
   const toggleShowCategories = () => {
     if (!showCategories && selectedCategories.length === 0) {
       setBorderColor("red");
@@ -99,10 +92,10 @@ export const CategoriesDropdown = ({ validateCategories }) => {
     );
     setSelectedCategories(updatedSelectedCategories);
 
-    // Disable the button when no categories are selected
     const isButtonDisabled = updatedSelectedCategories.length === 0;
     const borderColor = isButtonDisabled ? "red" : "green";
     setBorderColor(borderColor);
+    validateCategories(updatedSelectedCategories);
   };
 
   const selectedCategoryTitles = selectedCategories.map((id) => {
