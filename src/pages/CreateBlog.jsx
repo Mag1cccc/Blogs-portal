@@ -5,6 +5,7 @@ import redberryLogo from "../assets/redberry-logo.png";
 import errorImage from "../assets/error-message.svg";
 import successImage from "../assets/success-button.png";
 import { CategoriesDropdown } from "../../components/CategoriesDropdown";
+import { AddedBlogModal } from "../../components/AddedBlogModal";
 
 export const CreateBlog = () => {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -14,6 +15,12 @@ export const CreateBlog = () => {
   const [dateValidation, setDateValidation] = useState();
   const [emailValidation, setEmailValidation] = useState();
   const [categoriesValidation, setCategoriesValidation] = useState("default");
+  const [formData, setFormData] = useState(null);
+  const [token] = useState(
+    "afe8866805908dc79d5a55f82d8e36dc4bc7ac1a9337fc5c80074f784321cb1d"
+  );
+  const [submitTrigger, setSubmitTrigger] = useState(false);
+  const [formSubmitted, setFormSubmitted] = useState(false);
 
   const [authorValidation, setAuthorValidation] = useState({
     minLength: "default",
@@ -129,7 +136,7 @@ export const CreateBlog = () => {
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     setSelectedPhoto(file);
-    const fileURL = URL.createObjectURL(file); // Create a URL for the selected file
+    const fileURL = URL.createObjectURL(file);
     setSelectedFile(file);
     validateFile(file);
 
@@ -211,14 +218,60 @@ export const CreateBlog = () => {
     );
   };
 
-  const handleSubmit = () => {
-    if (isAllValid()) {
-      console.log("All validations passed! Proceed with the action.");
+  useEffect(() => {
+    const submitForm = () => {
+      if (formData && isAllValid()) {
+        var form = new FormData();
+        form.append("title", title);
+        form.append("description", description);
+        form.append("image", selectedPhoto);
+        form.append("author", author);
+        form.append("publish_date", date);
+        form.append("categories", category);
+        if (emailValidation) {
+          form.append("email", emailValidation);
+        }
+        for (const pair of form.entries()) {
+          console.log(pair[0], pair[1]);
+        }
+        fetch("https://api.blog.redberryinternship.ge/api/blogs", {
+          method: "POST",
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${token}`,
+          },
+          data: form,
+        })
+          .then((response) => {
+            if (response.ok) {
+              console.log("Form submitted successfully!");
+              // Set formSubmitted to true after a successful form submission
+              setFormSubmitted(true);
+            } else {
+              console.log(
+                "Failed to submit form. Server responded with:",
+                response.status
+              );
+            }
+          })
+          .catch((error) => {
+            console.error("Error submitting form:", error);
+          });
+      } else {
+        console.log("Form data is invalid or missing!");
+      }
+    };
 
-      console.log("Form submitted!");
-    } else {
-      console.log("Form validation failed!");
+    if (submitTrigger) {
+      submitForm();
+      setSubmitTrigger(false);
     }
+  }, [formData, token, submitTrigger]);
+
+  const handleFormSubmit = () => {
+    const currentFormData = getFormData();
+    setFormData(currentFormData);
+    setSubmitTrigger(true); //
   };
 
   const getBorderColorClass = (...validationStates) => {
@@ -410,13 +463,14 @@ export const CreateBlog = () => {
             className={`submit-btn ${
               isAllValid() ? "validated-submit-btn" : ""
             }`}
-            onClick={handleSubmit}
+            onClick={handleFormSubmit}
             disabled={!isAllValid()}
           >
             გამოქვეყნება
           </button>
         </div>
       </div>
+      <div>{formSubmitted && <AddedBlogModal />}</div>
     </>
   );
 };

@@ -620,3 +620,12 @@ input[type="date"] {
   line-height: 20px;
   cursor: pointer;
 }
+
+.bg-color {
+  background-color: #f0f0f0;
+}
+
+
+.modal-background-succes {
+  width: 100vw;
+}

@@ -4,9 +4,13 @@ import redberryLogo from "../assets/redberry-logo.png";
 import blogPagePhoto from "../assets/blog-page-photo.png";
 import { LoginModal } from "../../components/LoginModal";
 
-export const HomePage = ({  }) => {
+export const HomePage = ({}) => {
   const [dataCategories, setDataCategories] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [token] = useState(
+    "afe8866805908dc79d5a55f82d8e36dc4bc7ac1a9337fc5c80074f784321cb1d"
+  );
+  const [blogsList, setBlogsList] = useState([]);
 
   useEffect(() => {
     const fetchData = () => {
@@ -22,6 +26,27 @@ export const HomePage = ({  }) => {
 
     fetchData();
   }, []);
+  useEffect(() => {
+    const fetchData = () => {
+      axios
+        .get("https://api.blog.redberryinternship.ge/api/blogs", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            // Add any other necessary headers
+          },
+        })
+        .then((response) => {
+          setBlogsList(response?.data?.data);
+          console.log(response)
+        })
+        .catch((error) => {
+          console.error("Error fetching data:", error);
+        });
+    };
+
+    fetchData();
+  }, [token]);
+  // Include token as a dependency to re-fetch data if it changes
 
   return (
     <div>
