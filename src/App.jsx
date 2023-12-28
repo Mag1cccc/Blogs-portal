@@ -15,7 +15,6 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<HomePage />} />
-
           <Route
             path="/create-blog-home-page"
             element={<CreateBlogHomePage />}

@@ -73,7 +73,7 @@ export const CreateBlog = () => {
       date,
       category,
       email,
-      // ... other form fields
+  
     };
   };
 
@@ -245,7 +245,7 @@ export const CreateBlog = () => {
           .then((response) => {
             if (response.ok) {
               console.log("Form submitted successfully!");
-              // Set formSubmitted to true after a successful form submission
+             
               setFormSubmitted(true);
             } else {
               console.log(

@@ -3,6 +3,7 @@ import axios from "axios";
 import redberryLogo from "../assets/redberry-logo.png";
 import blogPagePhoto from "../assets/blog-page-photo.png";
 import { LoginModal } from "../../components/LoginModal";
+import { BlogCard } from "../../components/BlogCard";
 
 export const HomePage = ({}) => {
   const [dataCategories, setDataCategories] = useState([]);
@@ -32,12 +33,11 @@ export const HomePage = ({}) => {
         .get("https://api.blog.redberryinternship.ge/api/blogs", {
           headers: {
             Authorization: `Bearer ${token}`,
-            // Add any other necessary headers
           },
         })
         .then((response) => {
           setBlogsList(response?.data?.data);
-          console.log(response)
+          console.log(response);
         })
         .catch((error) => {
           console.error("Error fetching data:", error);
@@ -46,7 +46,6 @@ export const HomePage = ({}) => {
 
     fetchData();
   }, [token]);
-  // Include token as a dependency to re-fetch data if it changes
 
   return (
     <div>
@@ -78,6 +77,22 @@ export const HomePage = ({}) => {
             </h4>
           );
         })}
+      </div>
+      <div className="blog-card-div">
+        <BlogCard />
+        <BlogCard />
+        <BlogCard />
+        <BlogCard />
+        <BlogCard />
+        <BlogCard />
+        <BlogCard />
+        <BlogCard />
+        <BlogCard />
+        <BlogCard />
+        <BlogCard />
+        <BlogCard />
+        <BlogCard />
+        <BlogCard />
       </div>
     </div>
   );
