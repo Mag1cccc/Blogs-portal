@@ -625,3 +625,7 @@ input[type="date"] {
 .mb-16 {
   margin-bottom: 16px;
 }
+
+.m-24 {
+  margin: 24px 0;
+}
