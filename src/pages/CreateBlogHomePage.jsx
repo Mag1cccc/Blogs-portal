@@ -6,7 +6,6 @@ import { Link } from "react-router-dom";
 
 export const CreateBlogHomePage = ({}) => {
   const [dataCategories, setDataCategories] = useState([]);
-  
 
   useEffect(() => {
     const fetchData = () => {

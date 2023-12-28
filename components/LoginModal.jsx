@@ -42,7 +42,6 @@ export const LoginModal = ({ onClose, onLoginSuccess }) => {
 
   return (
     <>
-      <div className="modal-background"> </div>
       <div className="login-modal">
         <div className="close-button">
           <button onClick={onClose} className="btn-stealth">
@@ -66,12 +65,32 @@ export const LoginModal = ({ onClose, onLoginSuccess }) => {
             <div className="modal-header">
               <h3> შესვლა </h3>
             </div>
-            <div className="inputs">
-              <label> ელ-ფოსტა </label>
+            <div>
+              <label
+                style={{
+                  display: "block",
+                  fontFamily: "firaGo",
+                  fontSize: "14px",
+                  fontWeight: "500",
+                  lineHeight: "20px",
+                  marginBottom: "8px",
+                }}
+              >
+                ელ-ფოსტა
+              </label>
               <input
                 placeholder="Example@redberry.ge"
                 value={email}
                 onChange={handleEmailChange}
+                style={{
+                  borderRadius: "12px",
+                  border: "1.5px solid #5D37F3",
+                  background: "#F7F7FF",
+                  marginBottom: "24px",
+                  width: "100%",
+                  height: "44px",
+                  padding: "12px 16px",
+                }}
               />
               {(!isValid || !isValidated) && (
                 <div className="validation-message">
