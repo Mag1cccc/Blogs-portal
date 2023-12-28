@@ -559,6 +559,12 @@ input[type="date"] {
   height: 620px;
 }
 
+.blog-card img {
+  width: 408px;
+  height: 328px;
+  border-radius: 12px;
+}
+
 .author-name {
   color: #1a1a1f;
   font-family: "firaGo";
@@ -603,6 +609,13 @@ input[type="date"] {
   overflow: hidden;
 }
 
+.blog-card-container {
+  max-width: 127px;
+  max-height: 20px;
+  display: flex;
+  align-items: center;
+}
+
 .blog-card-btn {
   all: unset;
   color: #5d37f3;
@@ -611,10 +624,12 @@ input[type="date"] {
   font-weight: 500;
   line-height: 20px;
   cursor: pointer;
+  display: inline-flex;
+  align-items: center;
 }
 
 .blog-card-btn img {
-  position: absolute;
+  width: 20px;
   margin-left: 4px;
 }
 
@@ -628,4 +643,70 @@ input[type="date"] {
 
 .m-24 {
   margin: 24px 0;
+}
+
+.full-info-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+  margin-bottom: 100px;
+}
+
+.container-two {
+  margin-top: 40px;
+  margin-bottom: 24px;
+}
+.container-two h3 {
+  color: #1a1a1f;
+  font-family: "firaGo";
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 20px;
+  margin-bottom: 6px;
+}
+
+.container-two p {
+  color: #85858d;
+  font-family: "firaGo";
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px;
+}
+
+.full-info-container-heading {
+  color: #1a1a1f;
+  font-family: "firaGo";
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 40px;
+  max-width: 720px;
+  margin-bottom: 24px;
+}
+
+.full-info-container-categories {
+  max-width: 720px;
+  margin-bottom: 40px;
+}
+
+.full-info-container-categories p {
+  font-family: "firaGo";
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 16px;
+}
+
+.full-info-container-description {
+  max-width: 720px;
+}
+
+.full-info-container-description {
+  color: #404049;
+  font-family: "firaGo";
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 28px;
+}
+
+.ml-40 {
+  margin-left: 100px;
 }

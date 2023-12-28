@@ -8,10 +8,6 @@ import { BlogCard } from "../../components/BlogCard";
 export const HomePage = ({}) => {
   const [dataCategories, setDataCategories] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [token] = useState(
-    "afe8866805908dc79d5a55f82d8e36dc4bc7ac1a9337fc5c80074f784321cb1d"
-  );
-  const [blogsList, setBlogsList] = useState([]);
 
   useEffect(() => {
     const fetchData = () => {
@@ -27,25 +23,6 @@ export const HomePage = ({}) => {
 
     fetchData();
   }, []);
-  useEffect(() => {
-    const fetchData = () => {
-      axios
-        .get("https://api.blog.redberryinternship.ge/api/blogs", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
-        .then((response) => {
-          setBlogsList(response?.data?.data);
-          console.log(response);
-        })
-        .catch((error) => {
-          console.error("Error fetching data:", error);
-        });
-    };
-
-    fetchData();
-  }, [token]);
 
   return (
     <div>
@@ -79,19 +56,6 @@ export const HomePage = ({}) => {
         })}
       </div>
       <div className="blog-card-div">
-        <BlogCard />
-        <BlogCard />
-        <BlogCard />
-        <BlogCard />
-        <BlogCard />
-        <BlogCard />
-        <BlogCard />
-        <BlogCard />
-        <BlogCard />
-        <BlogCard />
-        <BlogCard />
-        <BlogCard />
-        <BlogCard />
         <BlogCard />
       </div>
     </div>

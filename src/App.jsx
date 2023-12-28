@@ -8,6 +8,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { CreateBlog } from "./pages/CreateBlog";
 import { HomePage } from "./pages/HomePage";
 import { CreateBlogHomePage } from "./pages/CreateBlogHomePage";
+import { FullInfoComponent } from "../components/FullInfoComponent";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
             element={<CreateBlogHomePage />}
           />
           <Route path="/create-blog" element={<CreateBlog />} />
+          <Route path="/blog-full-info" element={<FullInfoComponent />} />
           <Route path="*" element={<h1> PAGE NOT FOUND! </h1>} />
         </Routes>
       </Router>

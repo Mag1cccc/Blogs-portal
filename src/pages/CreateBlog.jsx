@@ -226,7 +226,7 @@ export const CreateBlog = () => {
         form.append("image", selectedPhoto);
         form.append("author", author);
         form.append("publish_date", date);
-        form.append("categories", selectedCategories);
+        form.append("categories", category);
         if (emailValidation) {
           form.append("email", emailValidation);
         }
@@ -239,24 +239,23 @@ export const CreateBlog = () => {
             "Content-Type": "multipart/form-data",
             Authorization: `Bearer ${token}`,
           },
-          body: form
+          form,
         })
-          
-            .then((response) => {
-              if (response.ok) {
-                console.log("Form submitted successfully!");
+          .then((response) => {
+            if (response.ok) {
+              console.log("Form submitted successfully!");
 
-                setFormSubmitted(true);
-              } else {
-                console.log(
-                  "Failed to submit form. Server responded with:",
-                  response.status
-                );
-              }
-            })
-            .catch((error) => {
-              console.error("Error submitting form:", error);
-            });
+              setFormSubmitted(true);
+            } else {
+              console.log(
+                "Failed to submit form. Server responded with:",
+                response.status
+              );
+            }
+          })
+          .catch((error) => {
+            console.error("Error submitting form:", error);
+          });
       } else {
         console.log("Form data is invalid or missing!");
       }
