@@ -9,6 +9,7 @@ export const BlogCard = ({ selectedCategoryList }) => {
     "afe8866805908dc79d5a55f82d8e36dc4bc7ac1a9337fc5c80074f784321cb1d"
   );
   const [blogsList, setBlogsList] = useState([]);
+  const [filteredBlogs, setFilteredBlogs] = useState([]);
   useEffect(() => {
     const fetchData = () => {
       axios
@@ -28,9 +29,22 @@ export const BlogCard = ({ selectedCategoryList }) => {
     fetchData();
   }, [token]);
 
+  useEffect(() => {
+    if (selectedCategoryList.length > 0) {
+      const filtered = blogsList.filter((blog) =>
+        selectedCategoryList.every((categoryId) =>
+          blog.categories.some((category) => category.id === categoryId)
+        )
+      );
+      setFilteredBlogs(filtered);
+    } else {
+      setFilteredBlogs(blogsList);
+    }
+  }, [blogsList, selectedCategoryList]);
+
   return (
     <>
-      {blogsList.map((element) => (
+      {filteredBlogs.map((element) => (
         <div className="blog-card m-24" key={element.id}>
           <img src={element.image} alt="" />
           <div className="mt-24 mb-16">
