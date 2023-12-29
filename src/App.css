@@ -724,7 +724,7 @@ input[type="date"] {
 }
 
 /* Style for each individual blog card */
-.blog-card {
+.blogs-card {
   display: inline-block;
   width: 30%;
   margin: 10px;

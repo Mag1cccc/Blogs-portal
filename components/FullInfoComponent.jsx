@@ -119,7 +119,7 @@ export const FullInfoComponent = () => {
           </div>
         </div>
       ) : (
-        <p>Loading or no blog data available</p>
+        <h1 style={{ textAlign: "center", color: "red" }}>Loading ...</h1>
       )}
 
       <div className="slider">
@@ -133,41 +133,45 @@ export const FullInfoComponent = () => {
           <img src={nextArrow} alt="" style={{ marginLeft: "24px" }} />
         </div>
       </div>
-      <div className="related-blogs">
-        {relatedBlogs.map((blog) => (
-          <div key={blog.id}>
-            <img src={blog.image} alt="" />
-            <h2>{blog.author}</h2>
-            <p>{blog.publish_date}</p>
-            <h3>{blog.title}</h3>
-            <div className="categories-styled">
-              {blog.categories.map((element) => {
-                return (
-                  <div
-                    style={{
-                      color: element.text_color,
-                      backgroundColor: element.background_color,
-                      fontFamily: "firaGo",
-                      fontSize: "12px",
-                      fontWeight: 500,
-                      lineHeight: "16px",
-                      marginLeft: "8px",
-                      padding: "6px 10px",
-                      borderRadius: "30px",
-                      maxWidth: "170px",
-                      textAlign: "center",
-                    }}
-                    key={element.id}
-                  >
-                    {element.title}
-                  </div>
-                );
-              })}{" "}
+      {relatedBlogs ? (
+        <div className="related-blogs">
+          {relatedBlogs.map((blog) => (
+            <div key={blog.id}>
+              <img src={blog.image} alt="" />
+              <h2>{blog.author}</h2>
+              <p>{blog.publish_date}</p>
+              <h3>{blog.title}</h3>
+              <div className="categories-styled">
+                {blog.categories.map((element) => {
+                  return (
+                    <div
+                      style={{
+                        color: element.text_color,
+                        backgroundColor: element.background_color,
+                        fontFamily: "firaGo",
+                        fontSize: "12px",
+                        fontWeight: 500,
+                        lineHeight: "16px",
+                        marginLeft: "8px",
+                        padding: "6px 10px",
+                        borderRadius: "30px",
+                        maxWidth: "170px",
+                        textAlign: "center",
+                      }}
+                      key={element.id}
+                    >
+                      {element.title}
+                    </div>
+                  );
+                })}
+              </div>
+              <p className="related-blogs-description"> {blog.description} </p>
             </div>
-            <p className="related-blogs-description"> {blog.description} </p>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      ) : (
+        <h2 style={{ textAlign: "center", color: "red" }}>Loading ...</h2>
+      )}
     </div>
   );
 };
