@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { LoginModal } from "./LoginModal";
 import redberryLogo from "../src/assets/redberry-logo.png";
-import fakePhotoTwo from "../src/assets/fake-photo-2.png";
 import { useNavigate, useParams } from "react-router-dom";
 import backArrow from "../src/assets/back-arrow.png";
 import nextArrow from "../src/assets/blue-arrow.svg";
@@ -17,6 +16,8 @@ export const FullInfoComponent = () => {
   const [token] = useState(
     "afe8866805908dc79d5a55f82d8e36dc4bc7ac1a9337fc5c80074f784321cb1d"
   );
+
+  const [filteredBlogs, setFilteredBlogs] = useState([]);
 
   useEffect(() => {
     const fetchBlogData = () => {
@@ -49,10 +50,13 @@ export const FullInfoComponent = () => {
             Authorization: `Bearer ${token}`,
           },
           params: {
-            categories: categories.join(), // Pass selected categories to filter blogs
+            categories: categories.join(),
           },
         })
         .then((response) => {
+          const filteredBlogs = response.data.data.filter((blog) =>
+            blog.categories.some((category) => categories.includes(category.id))
+          );
           setRelatedBlogs(response.data.data);
         })
         .catch((error) => {
@@ -60,6 +64,20 @@ export const FullInfoComponent = () => {
         });
     }
   }, [blogData, token]);
+
+  useEffect(() => {
+    if (relatedBlogs.length > 0) {
+      const selectedCategoryList = blogData
+        ? blogData.categories.map((category) => category.id)
+        : [];
+      const filtered = relatedBlogs.filter((blog) =>
+        selectedCategoryList.every((categoryId) =>
+          blog.categories.some((category) => category.id === categoryId)
+        )
+      );
+      setFilteredBlogs(filtered);
+    }
+  }, [relatedBlogs, blogData]);
 
   return (
     <div>
@@ -88,7 +106,9 @@ export const FullInfoComponent = () => {
             <div className="full-info-container-categories">
               <div
                 style={{
-                  display: "flex",
+                  display: "grid",
+                  gridTemplateColumns: "auto auto auto",
+                  rowGap: "10px",
                 }}
               >
                 {blogData.categories.map((element) => {
@@ -104,6 +124,7 @@ export const FullInfoComponent = () => {
                         marginLeft: "8px",
                         padding: "6px 10px",
                         borderRadius: "30px",
+                        width: "180px",
                       }}
                       key={element.id}
                     >
@@ -133,9 +154,9 @@ export const FullInfoComponent = () => {
           <img src={nextArrow} alt="" style={{ marginLeft: "24px" }} />
         </div>
       </div>
-      {relatedBlogs ? (
+      {filteredBlogs ? (
         <div className="related-blogs">
-          {relatedBlogs.map((blog) => (
+          {filteredBlogs.map((blog) => (
             <div key={blog.id}>
               <img src={blog.image} alt="" />
               <h2>{blog.author}</h2>

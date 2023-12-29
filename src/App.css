@@ -741,6 +741,7 @@ input[type="date"] {
   grid-template-columns: auto auto auto;
   margin-top: 20px;
   row-gap: 80px;
+  margin-bottom: 100px;
 }
 
 .related-blogs img {
