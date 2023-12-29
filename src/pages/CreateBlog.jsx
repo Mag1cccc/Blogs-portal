@@ -117,7 +117,6 @@ export const CreateBlog = () => {
   };
 
   const validateCategories = (selectedCategories) => {
-    console.log("Selected Categories:", selectedCategories);
     const isValid = selectedCategories.length > 0;
     setCategoriesValidation(isValid ? "green" : "red");
   };
@@ -226,25 +225,20 @@ export const CreateBlog = () => {
         form.append("image", selectedPhoto);
         form.append("author", author);
         form.append("publish_date", date);
-        form.append("categories", category);
+        form.append("categories", `[1,2,3]`);
         if (emailValidation) {
-          form.append("email", emailValidation);
-        }
-        for (const pair of form.entries()) {
-          console.log(pair[0], pair[1]);
+          form.append("email", email);
         }
         fetch("https://api.blog.redberryinternship.ge/api/blogs", {
           method: "POST",
           headers: {
-            "Content-Type": "multipart/form-data",
+            Accept: "application/json",
             Authorization: `Bearer ${token}`,
           },
-          form,
+          body: form,
         })
           .then((response) => {
             if (response.ok) {
-              console.log("Form submitted successfully!");
-
               setFormSubmitted(true);
             } else {
               console.log(
@@ -270,7 +264,7 @@ export const CreateBlog = () => {
   const handleFormSubmit = () => {
     const currentFormData = getFormData();
     setFormData(currentFormData);
-    setSubmitTrigger(true); //
+    setSubmitTrigger(true);
   };
 
   const getBorderColorClass = (...validationStates) => {

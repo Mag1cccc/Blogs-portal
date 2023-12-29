@@ -21,7 +21,7 @@ function App() {
             element={<CreateBlogHomePage />}
           />
           <Route path="/create-blog" element={<CreateBlog />} />
-          <Route path="/blog-full-info" element={<FullInfoComponent />} />
+          <Route path="/blogs/:id" element={<FullInfoComponent />} />
           <Route path="*" element={<h1> PAGE NOT FOUND! </h1>} />
         </Routes>
       </Router>

@@ -4,7 +4,7 @@ import nextButton from "../src/assets/Arrow.svg";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
-export const BlogCard = () => {
+export const BlogCard = ({ selectedCategoryList }) => {
   const [token] = useState(
     "afe8866805908dc79d5a55f82d8e36dc4bc7ac1a9337fc5c80074f784321cb1d"
   );
@@ -19,7 +19,6 @@ export const BlogCard = () => {
         })
         .then((response) => {
           setBlogsList(response.data.data);
-          console.log(response);
         })
         .catch((error) => {
           console.error("Error fetching data:", error);
@@ -29,7 +28,6 @@ export const BlogCard = () => {
     fetchData();
   }, [token]);
 
-  console.log(blogsList);
   return (
     <>
       {blogsList.map((element) => (
@@ -41,13 +39,34 @@ export const BlogCard = () => {
           </div>
           <h2 className="blog-heading mb-16">{element.title}</h2>
           <div className="mb-16">
-            <p className="added-blog-categories"></p>
+            <div className="added-blog-categories">
+              {element.categories.map((element) => {
+                return (
+                  <div
+                    style={{
+                      color: element.text_color,
+                      backgroundColor: element.background_color,
+                      fontFamily: "firaGo",
+                      fontSize: "12px",
+                      fontWeight: 500,
+                      lineHeight: "16px",
+                      marginLeft: "8px",
+                      padding: "6px 10px",
+                      borderRadius: "30px",
+                    }}
+                    key={element.id}
+                  >
+                    {element.title}
+                  </div>
+                );
+              })}
+            </div>
           </div>
           <div className="mb-16 description-container">
             <p className="added-blog-description">{element.description}</p>
           </div>
           <div className="blog-card-container">
-            <Link to="/blog-full-info" className="blog-card-btn">
+            <Link to={`/blogs/${element.id}`} className="blog-card-btn">
               <button className="blog-card-btn">
                 სრულად ნახვა <img src={nextButton} alt="" />
               </button>

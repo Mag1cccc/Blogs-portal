@@ -8,6 +8,7 @@ import { BlogCard } from "../../components/BlogCard";
 export const HomePage = ({}) => {
   const [dataCategories, setDataCategories] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedCategoryList, setSelectedCategoryList] = useState([]);
 
   useEffect(() => {
     const fetchData = () => {
@@ -23,6 +24,16 @@ export const HomePage = ({}) => {
 
     fetchData();
   }, []);
+
+  const selectCategory = (id) => {
+    if (selectedCategoryList.includes(id)) {
+      setSelectedCategoryList(
+        selectedCategoryList.filter((item) => item !== id)
+      );
+    } else {
+      setSelectedCategoryList([...selectedCategoryList, id]);
+    }
+  };
 
   return (
     <div>
@@ -40,15 +51,18 @@ export const HomePage = ({}) => {
       </section>
 
       <div className="categories">
-        {console.log(dataCategories)}
         {dataCategories.map((element) => {
+          const isSelected = selectedCategoryList.includes(element.id);
           return (
             <h4
               key={element.id}
               style={{
                 color: element.text_color,
                 backgroundColor: element.background_color,
+                cursor: "pointer",
               }}
+              className={isSelected ? "checked" : ""}
+              onClick={() => selectCategory(element.id)}
             >
               {element.title}
             </h4>
@@ -56,7 +70,7 @@ export const HomePage = ({}) => {
         })}
       </div>
       <div className="blog-card-div">
-        <BlogCard />
+        <BlogCard selectedCategoryList={selectedCategoryList} />
       </div>
     </div>
   );

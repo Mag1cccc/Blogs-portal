@@ -585,6 +585,9 @@ input[type="date"] {
 
 .added-blog-categories {
   width: 380px;
+  display: grid;
+  grid-template-columns: auto auto auto;
+  gap: 10px;
 }
 
 .added-blog-description {
@@ -701,4 +704,9 @@ input[type="date"] {
 
 .ml-40 {
   margin-left: 100px;
+}
+
+.checked {
+  opacity: 0.25;
+  border: 2px solid #000000;
 }

@@ -39,7 +39,6 @@ export const CreateBlogHomePage = ({}) => {
       </section>
 
       <div className="categories">
-        {console.log(dataCategories)}
         {dataCategories.map((element) => {
           return (
             <h4

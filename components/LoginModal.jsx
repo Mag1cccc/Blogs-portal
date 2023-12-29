@@ -18,7 +18,6 @@ export const LoginModal = ({ onClose, onLoginSuccess }) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(email, isValid);
     if (email === "@redberry.ge" || !email.endsWith("@redberry.ge")) {
       setIsValid(false);
       return;
