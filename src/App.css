@@ -623,6 +623,7 @@ input[type="date"] {
   align-items: center;
 }
 
+.related-blogs .blog-card-btn img,
 .blog-card-btn img {
   width: 20px;
   margin-left: 4px;
@@ -793,4 +794,8 @@ input[type="date"] {
   grid-template-columns: auto auto auto;
   width: 420px;
   gap: 10px;
+}
+
+.filtered-img {
+  width: 20px;
 }

@@ -4,6 +4,8 @@ import redberryLogo from "../src/assets/redberry-logo.png";
 import { useNavigate, useParams } from "react-router-dom";
 import backArrow from "../src/assets/back-arrow.png";
 import nextArrow from "../src/assets/blue-arrow.svg";
+import { Link } from "react-router-dom";
+import nextButton from "../src/assets/Arrow.svg";
 
 import axios from "axios";
 
@@ -215,10 +217,14 @@ export const FullInfoComponent = () => {
                     );
                   })}
                 </div>
-                <p className="related-blogs-description">
-                  {" "}
-                  {blog.description}{" "}
-                </p>
+                <p className="related-blogs-description">{blog.description}</p>
+                <div className="blog-card-container">
+                  <Link to={`/blogs/${blog.id}`} className="blog-card-btn">
+                    <button className="blog-card-btn">
+                      სრულად ნახვა <img src={nextButton} alt="" />
+                    </button>
+                  </Link>
+                </div>
               </div>
             ))}
         </div>

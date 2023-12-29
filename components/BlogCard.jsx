@@ -81,7 +81,7 @@ export const BlogCard = ({ selectedCategoryList }) => {
           </div>
           <div className="blog-card-container">
             <Link to={`/blogs/${element.id}`} className="blog-card-btn">
-              <button className="blog-card-btn">
+              <button className="blog-card-btn filtered-img">
                 სრულად ნახვა <img src={nextButton} alt="" />
               </button>
             </Link>
