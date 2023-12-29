@@ -177,6 +177,9 @@ export const CreateBlog = () => {
 
     setDescriptionValidation(isValid ? "green" : "red");
   };
+  const handleChangeCategories = (categories) => {
+    setSelectedCategories(categories);
+  };
 
   const handleDateChange = (event) => {
     const newDate = event.target.value;
@@ -225,7 +228,7 @@ export const CreateBlog = () => {
         form.append("image", selectedPhoto);
         form.append("author", author);
         form.append("publish_date", date);
-        form.append("categories", `[1,2,3]`);
+        form.append("categories", `[${selectedCategories}]`);
         if (emailValidation) {
           form.append("email", email);
         }
@@ -416,7 +419,10 @@ export const CreateBlog = () => {
             </div>
             <div className="author ml-24">
               <label className="labels">კატეგორია *</label>
-              <CategoriesDropdown validateCategories={validateCategories} />
+              <CategoriesDropdown
+                validateCategories={validateCategories}
+                onChange={handleChangeCategories}
+              />
             </div>
           </div>
           <div className="container3">

@@ -711,3 +711,86 @@ input[type="date"] {
   opacity: 0.25;
   border: 2px solid #000000;
 }
+
+.slider {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 40px;
+}
+
+.slider-arrows {
+  margin-right: 100px;
+}
+
+/* Style for each individual blog card */
+.blog-card {
+  display: inline-block;
+  width: 30%;
+  margin: 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.related-blogs {
+  display: grid;
+  margin-left: 60px;
+  grid-template-columns: auto auto auto;
+  margin-top: 20px;
+  row-gap: 80px;
+}
+
+.related-blogs img {
+  width: 408px;
+  height: 328px;
+  border-radius: 12px;
+}
+
+.related-blogs h2 {
+  margin-top: 10px;
+  color: #1a1a1f;
+  font-family: "firaGo";
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 20px;
+}
+
+.related-blogs p {
+  margin-top: 5px;
+  color: #85858d;
+  font-family: "firaGo";
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px;
+}
+
+.related-blogs h3 {
+  margin-top: 16px;
+  width: 408px;
+  color: #1a1a1f;
+  font-family: "firaGo";
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 28px;
+  margin-bottom: 16px;
+}
+
+.related-blogs-description {
+  width: 408px;
+  color: #404049;
+  font-family: "firaGo";
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 28px;
+  margin-top: 16px;
+}
+
+.categories-styled {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  width: 420px;
+  gap: 10px;
+}

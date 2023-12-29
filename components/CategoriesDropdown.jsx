@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import arrowDown from "../src/assets/arrow-down.svg";
 
-export const CategoriesDropdown = ({ validateCategories }) => {
+export const CategoriesDropdown = ({ validateCategories, onChange }) => {
   const [categories, setCategories] = useState([]);
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [showCategories, setShowCategories] = useState(false);
@@ -44,16 +44,6 @@ export const CategoriesDropdown = ({ validateCategories }) => {
       });
   };
 
-  const getBorderColor = () => {
-    if (showCategories && selectedCategories.length > 0) {
-      setBorderColor("green");
-    } else if (showCategories && selectedCategories.length === 0) {
-      setBorderColor("red");
-    } else if (!showCategories) {
-      return borderColor;
-    }
-  };
-
   useEffect(() => {
     localStorage.setItem(
       "selectedCategories",
@@ -93,7 +83,7 @@ export const CategoriesDropdown = ({ validateCategories }) => {
         selectedCategoryColors;
       updatedCategoryColors = restColors;
     }
-
+    onChange(updatedSelectedCategories);
     setSelectedCategories(updatedSelectedCategories);
     setSelectedCategoryColors(updatedCategoryColors);
 
