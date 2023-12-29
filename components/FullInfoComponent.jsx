@@ -18,6 +18,23 @@ export const FullInfoComponent = () => {
   );
 
   const [filteredBlogs, setFilteredBlogs] = useState([]);
+  const [startIndex, setStartIndex] = useState(0);
+  const blogsPerPage = 3;
+
+  const nextSlide = () => {
+    const totalBlogs = filteredBlogs.length;
+    const newIndex = startIndex + blogsPerPage;
+    if (newIndex < totalBlogs) {
+      setStartIndex(newIndex);
+    }
+  };
+
+  const prevSlide = () => {
+    const newIndex = startIndex - blogsPerPage;
+    if (newIndex >= 0) {
+      setStartIndex(newIndex);
+    }
+  };
 
   useEffect(() => {
     const fetchBlogData = () => {
@@ -150,45 +167,60 @@ export const FullInfoComponent = () => {
           </h2>
         </div>
         <div className="slider-arrows">
-          <img src={backArrow} alt="" />
-          <img src={nextArrow} alt="" style={{ marginLeft: "24px" }} />
+          <img
+            src={backArrow}
+            alt=""
+            onClick={prevSlide}
+            style={{ cursor: "pointer" }}
+          />
+          <img
+            src={nextArrow}
+            alt=""
+            onClick={nextSlide}
+            style={{ marginLeft: "24px", cursor: "pointer" }}
+          />
         </div>
       </div>
       {filteredBlogs ? (
         <div className="related-blogs">
-          {filteredBlogs.map((blog) => (
-            <div key={blog.id}>
-              <img src={blog.image} alt="" />
-              <h2>{blog.author}</h2>
-              <p>{blog.publish_date}</p>
-              <h3>{blog.title}</h3>
-              <div className="categories-styled">
-                {blog.categories.map((element) => {
-                  return (
-                    <div
-                      style={{
-                        color: element.text_color,
-                        backgroundColor: element.background_color,
-                        fontFamily: "firaGo",
-                        fontSize: "12px",
-                        fontWeight: 500,
-                        lineHeight: "16px",
-                        marginLeft: "8px",
-                        padding: "6px 10px",
-                        borderRadius: "30px",
-                        maxWidth: "170px",
-                        textAlign: "center",
-                      }}
-                      key={element.id}
-                    >
-                      {element.title}
-                    </div>
-                  );
-                })}
+          {filteredBlogs
+            .slice(startIndex, startIndex + blogsPerPage)
+            .map((blog) => (
+              <div key={blog.id}>
+                <img src={blog.image} alt="" />
+                <h2>{blog.author}</h2>
+                <p>{blog.publish_date}</p>
+                <h3>{blog.title}</h3>
+                <div className="categories-styled">
+                  {blog.categories.map((element) => {
+                    return (
+                      <div
+                        style={{
+                          color: element.text_color,
+                          backgroundColor: element.background_color,
+                          fontFamily: "firaGo",
+                          fontSize: "12px",
+                          fontWeight: 500,
+                          lineHeight: "16px",
+                          marginLeft: "8px",
+                          padding: "6px 10px",
+                          borderRadius: "30px",
+                          maxWidth: "170px",
+                          textAlign: "center",
+                        }}
+                        key={element.id}
+                      >
+                        {element.title}
+                      </div>
+                    );
+                  })}
+                </div>
+                <p className="related-blogs-description">
+                  {" "}
+                  {blog.description}{" "}
+                </p>
               </div>
-              <p className="related-blogs-description"> {blog.description} </p>
-            </div>
-          ))}
+            ))}
         </div>
       ) : (
         <h2 style={{ textAlign: "center", color: "red" }}>Loading ...</h2>
